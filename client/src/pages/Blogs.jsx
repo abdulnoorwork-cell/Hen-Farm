@@ -8,66 +8,8 @@ import {
 import PageBanner from '../components/PageBanner'
 import BlogCard from '../components/BlogCard'
 import { useInView } from "react-intersection-observer";
-
-const categories = [
-  "Broiler Farming",
-  "Layer Farming",
-  "Poultry Feed",
-  "Vaccination",
-  "Health Care",
-  "Farm Management",
-];
-
-const blogs = [
-  {
-    id: 1,
-    title: "Best Feeding Practices For Healthy Broilers",
-    image:
-      "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=80",
-    date: "July 15, 2026",
-    author: "Admin",
-  },
-  {
-    id: 2,
-    title: "Prevent Common Poultry Diseases",
-    image:
-      "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1200&q=80",
-    date: "July 12, 2026",
-    author: "Admin",
-  },
-  {
-    id: 3,
-    title: "Modern Poultry Farm Management Guide",
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-    date: "July 10, 2026",
-    author: "Admin",
-  },
-  {
-    id: 4,
-    title: "Essential Vaccination Schedule For Poultry",
-    image:
-      "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1200&q=80",
-    date: "July 08, 2026",
-    author: "Admin",
-  },
-  {
-    id: 5,
-    title: "How To Improve Egg Production Naturally",
-    image:
-      "https://images.unsplash.com/photo-1560807707-8cc77767d783?auto=format&fit=crop&w=1200&q=80",
-    date: "July 05, 2026",
-    author: "Admin",
-  },
-  {
-    id: 6,
-    title: "Top Poultry Nutrition Tips For Farmers",
-    image:
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80",
-    date: "July 02, 2026",
-    author: "Admin",
-  },
-];
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const tags = [
   "Broilers",
@@ -82,6 +24,7 @@ const tags = [
 
 const Blogs = () => {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true })
+  const { blogs } = useContext(AppContext);
 
   return (
     <div>

@@ -3,40 +3,35 @@ import Button from "./Button";
 import BlogCard from "./BlogCard";
 import { Link } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
-
-const blogs = [
-    {
-        id: 1,
-        image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=80",
-        title: "Best Feeding Practices For Healthy Broilers",
-        date: "July 15, 2026",
-        author: "Admin",
-    },
-    {
-        id: 2,
-        image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1200&q=80",
-        title: "Prevent Common Poultry Diseases",
-        date: "July 12, 2026",
-        author: "Admin",
-    },
-    {
-        id: 3,
-        image: "https://images.unsplash.com/photo-1590402494610-2c378a9114c6?auto=format&fit=crop&w=1200&q=80",
-        title: "Modern Poultry Farm Management Guide",
-        date: "July 10, 2026",
-        author: "Admin",
-    },
-    // {
-    //     id: 4,
-    //     image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=80",
-    //     title: "Best Feeding Practices For Healthy Broilers",
-    //     date: "July 15, 2026",
-    //     author: "Admin",
-    // },
-];
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from 'axios'
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const Blogs = () => {
     const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true })
+    const {backendUrl} = useContext(AppContext);
+    const [latestBlogs,setLatestBlogs] = useState([ ]);
+    const [loading,setLoading] = useState(false);
+
+    const fetchBlogs=async () => {
+        try {
+            setLoading(true)
+            let response = await axios.get(`${backendUrl}/api/blogs/latest`,{withCredentials:true})
+            if(response.data) {
+                setLatestBlogs(response.data)
+                setLoading(false)
+            }
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            console.log(error)
+        }
+    }
+    useEffect(()=>{
+        fetchBlogs()
+    },[ ])
 
     return (
         <section className="2xl:py-24 py-20">
@@ -65,7 +60,7 @@ const Blogs = () => {
 
                 {/* Blogs Layout */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {blogs.map((blog, index) => (
+                    {latestBlogs.map((blog, index) => (
                         <div key={index} ref={ref} style={{ transitionDelay: `${blog.id * 120}ms` }} className={`box ${inView ? "show" : ""}`}>
                             <BlogCard key={index} blog={blog} />
                         </div>

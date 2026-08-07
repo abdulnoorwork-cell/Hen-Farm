@@ -10,7 +10,7 @@ const BlogCard = ({blog}) => {
         >
             <div className="overflow-hidden">
                 <img
-                    src={blog.image}
+                    src={blog.image.url}
                     alt={blog.title}
                     className="w-full 2xl:h-68 sm:h-64 h-60 object-cover transition duration-700 group-hover:scale-110"
                 />

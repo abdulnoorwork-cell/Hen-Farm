@@ -59,3 +59,28 @@ export const getBlogs = async (req, res) => {
         });
     }
 }
+
+export const latestBlogs = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 3;
+
+        const [blogs] = await db.query(
+            "SELECT id, title, description, image, created_at FROM blogs ORDER BY created_at DESC LIMIT ?",
+            [limit]
+        );
+
+        const result = blogs.map(blog => ({
+            ...blog,
+            image: JSON.parse(blog.image)
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Error: " + error
+        });
+    }
+};

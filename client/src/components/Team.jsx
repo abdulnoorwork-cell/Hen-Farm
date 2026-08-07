@@ -38,7 +38,7 @@ const TeamSection = () => {
 
         <div className="team_parent grid lg:grid-cols-3 grid-cols-2 gap-8 items-center justify-center w-full">
           {teamMembers.map((team, index) => (
-            <div ref={ref} style={{transitionDelay:`${index * 120}ms`}} className={`box ${inView ? "show" : ""} group min-h-[350px] flex flex-col items-center justify-center px-4 py-10 sm:bg-lime-50 bg-[#f7fbf1] rounded-3xl w-full cursor-pointer border border-slate-200 hover:border-slate-300 hover:shadow-lime-200 transition`}>
+            <div key={index} ref={ref} style={{transitionDelay:`${index * 120}ms`}} className={`box ${inView ? "show" : ""} group min-h-[350px] flex flex-col items-center justify-center px-4 py-10 sm:bg-lime-50 bg-[#f7fbf1] rounded-3xl w-full cursor-pointer border border-slate-200 hover:border-slate-300 hover:shadow-lime-200 transition`}>
               <img className="w-24 h-24 rounded-full" src={team.img} alt={team.name} />
               <h2 className="text-xl font-semibold mt-2.5 mb-0.5 text-gray-900">{team.name}</h2>
               <p className="text-gray-500 font-medium">{team.role}</p>
