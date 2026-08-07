@@ -32,8 +32,8 @@ app.get('/',(_,res)=>{
     res.status(200).json({success:true,message:"Response From the server"})
 })
 
-app.listen(Port,()=>{
-    console.log(`Server is running on http://localhost:${Port}`)
-})
+// app.listen(Port,()=>{
+//     console.log(`Server is running on http://localhost:${Port}`)
+// })
 
 export default app;
