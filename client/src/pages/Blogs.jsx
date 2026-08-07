@@ -148,7 +148,7 @@ const Blogs = () => {
             {tags.map((tag, index) => (
               <h6
                 key={index}
-                className="px-6 py-3 rounded-full max-sm:text-sm bg-[#f8faf5] text-gray-600 hover:bg-lime-600 hover:text-white transition cursor-pointer"
+                className="px-6 py-3 rounded-md max-sm:text-sm bg-[#f7fbf1] text-gray-600 hover:bg-lime-600 hover:text-white transition cursor-pointer"
               >
                 {tag}
               </h6>
