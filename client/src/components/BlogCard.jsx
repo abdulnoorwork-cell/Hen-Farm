@@ -6,7 +6,7 @@ const BlogCard = ({blog}) => {
     return (
         <article
             key={blog.id}
-            className={`overflow-hidden transition duration-300 group rounded-2xl border border-gray-300`}
+            className={`overflow-hidden transition duration-300 group rounded-2xl bg-[#f7fbf1]`}
         >
             <div className="overflow-hidden">
                 <img
@@ -42,7 +42,7 @@ const BlogCard = ({blog}) => {
                     to improve your farm productivity.
                 </p>
 
-                <button className="mt-5 inline-flex items-center gap-2 bg-lime-500 px-6 py-3 text-white font-medium cursor-pointer transition hover:text-lime-900 rounded sm:text-sm text-xs">
+                <button className="mt-5 inline-flex items-center gap-2 bg-lime-600 px-6 py-3 text-white font-medium cursor-pointer transition hover:text-lime-900 rounded sm:text-sm text-xs">
                     Read More
                     <FiArrowRight />
                 </button>
