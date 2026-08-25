@@ -14,6 +14,10 @@ import Dashboard from './pages/dashboard/Dashboard'
 import Posts from './pages/dashboard/Posts'
 import AddPost from './pages/dashboard/AddPost'
 import 'quill/dist/quill.snow.css'
+import Products from './pages/Products'
+import AdminProducts from './pages/dashboard/Products'
+import SingleBlog from './pages/SingleBlog'
+import AddProduct from './pages/dashboard/AddProduct'
 
 const App = () => {
   const isAdmin = true;
@@ -26,12 +30,16 @@ const App = () => {
           <Route path='/blogs' element={<Blogs />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/services' element={<Services />} />
+          <Route path='/products' element={<Products />} />
+          <Route path='/blog/:id' element={<SingleBlog />} />
         </Route>
         <Route path='/my-account' element={<Authentication />} />
         {isAdmin ? <Route path='/dashboard' element={<Layout />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard/posts' element={<Posts />} />
           <Route path='/dashboard/add-post' element={<AddPost />} />
+          <Route path='/dashboard/add-product' element={<AddProduct />} />
+          <Route path='/dashboard/products' element={<AdminProducts />} />
         </Route> : <Route path='/dashboard' element={<AdminLogin />} />}
       </Routes>
       <Toaster />

@@ -1,255 +1,253 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaYoutube,
-  FaWhatsapp,
-  FaPhoneAlt,
-  FaMapMarkerAlt,
-  FaEnvelope,
-  FaGlobe,
-} from "react-icons/fa";
-
-import {
-  FiArrowRight,
-  FiClock,
-  FiShield,
-  FiTruck,
-  FiHeadphones,
-} from "react-icons/fi";
-import { BsTelephone } from "react-icons/bs";
-import { LuMail } from "react-icons/lu";
-import logo from '../assets/logo.png'
-import background_img from '../assets/about.jpg'
+  ArrowUpRight,
+  Bird,
+  // Facebook,
+  // Instagram,
+  // Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  // Twitter,
+} from "lucide-react";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const quickLinks = [
+    { name: "Home", path: "/" },
+    { name: "About Us", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Products", path: "/products" },
+    { name: "Blogs", path: "/blogs" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  const services = [
+    "Poultry Farming",
+    "Bird Health & Care",
+    "Feed Management",
+    "Egg Production",
+    "Sustainable Farming",
+    "Quality Control",
+  ];
+
   return (
-    <footer>
-      {/* CTA Section */}
-      <div className="overflow-hidden bg-cover bg-center"
-          style={{
-            backgroundImage:
-              `linear-gradient(rgba(0,60,0,.85),rgba(0,60,0,.85)),url(${background_img})`,
-          }}>
-        <div className="container mx-auto px-5">
-          <div className="flex xl:flex-row flex-col items-center lg:justify-between lg:gap-6 gap-8 sm:py-12 py-16">
-            <div className="footer_contact flex items-center gap-5">
-              <div className="sm:w-18 sm:h-18 w-16 h-16 rounded-full bg-lime-500 flex items-center justify-center">
-                <FaPhoneAlt className="text-white text-[26px]" />
+    <footer className="relative overflow-hidden bg-[#07140B] text-white">
+
+      {/* ================= BACKGROUND ================= */}
+
+      <div className="absolute left-[-180px] top-20 h-96 w-96 rounded-full bg-emerald-500/[0.05] blur-[140px]" />
+
+      <div className="absolute right-[-180px] bottom-20 h-96 w-96 rounded-full bg-lime-400/[0.04] blur-[140px]" />
+
+      {/* ================= MAIN FOOTER ================= */}
+
+      <div className="relative z-10 pt-24 pb-14 container mx-auto px-5 md:px-8 lg:px-12">
+
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1fr_1.1fr]">
+
+          {/* ================= BRAND ================= */}
+
+          <div>
+
+            <Link
+              to="/"
+              onClick={() => scrollTo(0, 0)}
+              className="group inline-flex items-center gap-3"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-lg shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105">
+                <Bird size={22} />
               </div>
 
-              <div>
-                <h3 className="text-white sm:text-3xl text-2xl font-bold">
-                  Need Help? We're Here for You!
-                </h3>
-                <p className="text-white/80 mt-2 leading-tight">
-                  Our team is always ready to support you.
+              <div className="leading-none">
+                <p className="text-lg font-extrabold tracking-tight">
+                  Green<span className="text-emerald-400">Nest</span>
+                </p>
+
+                <p className="mt-1 text-[9px] font-medium uppercase tracking-[0.22em] text-gray-500">
+                  Poultry Farm
                 </p>
               </div>
-            </div>
+            </Link>
 
-            <div className="2xl:space-y-3 space-y-2 text-white">
-              <div className="flex items-center sm:gap-3 gap-2">
-                <BsTelephone className="text-xl" />
-                <span className="sm:text-base text-sm">+92 318 587 8868</span>
-              </div>
-
-              <div className="flex items-center sm:gap-3 gap-2">
-                <LuMail className="text-xl" />
-                <span className="sm:text-base text-sm">info@poultryfarm.com</span>
-              </div>
-            </div>
-
-            <div className="lg:text-right">
-              <button className="bg-lime-500 hover:bg-lime-600 transition px-10 py-4 cursor-pointer rounded-full 2xl:text-base text-white font-semibold inline-flex items-center gap-3 tracking-wide sm:text-base text-sm">
-                GET A FREE QUOTE
-                <FiArrowRight />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Footer */}
-      <div className="container mx-auto px-5 2xl:py-20 py-16">
-        <div className="main_footer grid lg:grid-cols-4 grid-cols-2 gap-12">
-          {/* Logo */}
-          <div>
-            <img
-              src={logo}
-              alt="logo"
-              className="w-40 sm:w-44 mb-6"
-            />
-
-            <p className="text-gray-700 text-sm sm:text-base">
-              We are committed to providing high-quality poultry
-              products and excellent customer service.
+            <p className="mt-6 max-w-sm text-sm leading-7 text-gray-400">
+              Modern poultry farming focused on healthier birds, better
+              productivity, responsible practices, and long-term farm growth.
             </p>
 
-            <div className="flex gap-3 2xl:mt-8 mt-6">
+            {/* Socials */}
+            {/* <div className="mt-6 flex items-center gap-2">
+
               {[
-                <FaFacebookF />,
-                <FaLinkedinIn />,
-                <FaYoutube />,
-                <FaWhatsapp />,
-              ].map((icon, i) => (
-                <div
-                  key={i}
-                  className="sm:w-10 sm:h-10 w-9 h-9 rounded-full border border-lime-500 text-lime-600 hover:bg-lime-500 hover:text-white transition flex items-center justify-center cursor-pointer"
+                {
+                  icon: Facebook,
+                  label: "Facebook",
+                },
+                {
+                  icon: Instagram,
+                  label: "Instagram",
+                },
+                {
+                  icon: Twitter,
+                  label: "Twitter",
+                },
+                {
+                  icon: Linkedin,
+                  label: "LinkedIn",
+                },
+              ].map(({ icon: Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-gray-400 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/30 hover:bg-emerald-400/10 hover:text-emerald-400"
                 >
-                  {icon}
-                </div>
+                  <Icon size={17} />
+                </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
-          {/* Quick Links */}
+          {/* ================= QUICK LINKS ================= */}
+
           <div>
-            <h3 className="sm:text-2xl text-xl font-bold 2xl:mb-8 mb-6">
-              Quick Links
+            <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-white">
+              Explore
             </h3>
 
-            <ul className="space-y-5">
-              {[
-                "Home",
-                "About Us",
-                "Services",
-                "Products",
-                "Blogs",
-                "Contact Us",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-3 text-slate-700 sm:text-[15px] text-sm hover:text-lime-600 cursor-pointer"
-                >
-                  <FiArrowRight />
-                  {item}
+            <ul className="mt-5 space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.path}
+                    onClick={() => scrollTo(0, 0)}
+                    className="group flex w-fit items-center gap-2 text-sm text-gray-400 transition-colors duration-300 hover:text-emerald-400"
+                  >
+                    <span className="h-px w-0 bg-emerald-400 transition-all duration-300 group-hover:w-3" />
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Products */}
+          {/* ================= SERVICES ================= */}
+
           <div>
-            <h3 className="sm:text-2xl text-xl font-bold 2xl:mb-8 mb-6">
-              Our Products
+            <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-white">
+              Services
             </h3>
 
-            <ul className="space-y-5">
-              {[
-                "Live Broilers",
-                "Hatching Eggs",
-                "Chicken Meat",
-                "Poultry Feed",
-                "Day Old Chicks",
-                "Vaccines & Supplements",
-              ].map((item) => (
+            <ul className="mt-5 space-y-3">
+              {services.map((service) => (
                 <li
-                  key={item}
-                  className="flex items-center gap-3 text-slate-700 sm:text-[15px] text-sm hover:text-lime-600 cursor-pointer"
+                  key={service}
+                  className="text-sm text-gray-400 transition-colors duration-300 hover:text-emerald-400"
                 >
-                  <FiArrowRight />
-                  {item}
+                  {service}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* ================= CONTACT ================= */}
+
           <div>
-            <h3 className="sm:text-2xl text-xl font-bold 2xl:mb-8 mb-6">
-              Contact Info
+            <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-white">
+              Get In Touch
             </h3>
 
-            <div className="space-y-6 text-gray-700">
-              <div className="flex sm:gap-4 gap-3">
-                <FaMapMarkerAlt className="text-lime-600 mt-1" />
-                <span className={"sm:text-[15px] text-sm"}>Haripur, Pakistan</span>
-              </div>
+            <div className="mt-5 space-y-4">
 
-              <div className="flex sm:gap-4 gap-3">
-                <FaPhoneAlt className="text-lime-600 mt-1" />
-                <span className={"sm:text-[15px] text-sm"}>+92 318 587 8868</span>
-              </div>
-
-              <div className="flex sm:gap-4 gap-3">
-                <FaEnvelope className="text-lime-600 mt-1" />
-                <span className={"sm:text-[15px] text-sm"}>info@poultryfarm.com</span>
-              </div>
-
-              <div className="flex sm:gap-4 gap-3">
-                <FiClock className="text-lime-600 mt-1" />
-                <span className={"sm:text-[15px] text-sm"}>Mon - Sat: 8:00 AM - 6:00 PM</span>
-              </div>
-
-              <div className="flex sm:gap-4 gap-3">
-                <FaGlobe className="text-lime-600 mt-1" />
-                <span className={"sm:text-[15px] text-sm"}>www.poultryfarm.com</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Features */}
-      <div className="border-t border-slate-300">
-        <div className="container mx-auto px-4 py-10">
-          <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-8">
-            {[
-              {
-                icon: <FiShield />,
-                title: "100% Quality",
-                desc: "Premium quality products",
-              },
-              {
-                icon: <FiShield />,
-                title: "Safe & Healthy",
-                desc: "Hygienic & safe environment",
-              },
-              {
-                icon: <FiHeadphones />,
-                title: "24/7 Support",
-                desc: "Always here for your help",
-              },
-              {
-                icon: <FiTruck />,
-                title: "Fast Delivery",
-                desc: "On-time delivery guaranteed",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center 2xl:gap-5 gap-4"
-              >
-                <div className="sm:w-16 sm:h-16 w-13 h-13 rounded-full bg-lime-600 text-white flex items-center justify-center sm:text-2xl text-xl">
-                  {item.icon}
+              {/* Location */}
+              <div className="flex gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
+                  <MapPin size={17} />
                 </div>
 
                 <div>
-                  <h4 className="font-bold sm:text-xl text-lg">
-                    {item.title}
-                  </h4>
-                  <p className="text-slate-700 max-sm:leading-tight text-sm sm:text-base">
-                    {item.desc}
+                  <p className="text-xs text-gray-500">
+                    Location
+                  </p>
+
+                  <p className="mt-0.5 text-sm text-gray-400">
+                    Haripur, Khyber Pakhtunkhwa
                   </p>
                 </div>
               </div>
-            ))}
+
+              {/* Phone */}
+              <a
+                href="tel:+923000000000"
+                className="group flex gap-3"
+              >
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
+                  <Phone size={17} />
+                </div>
+
+                <div>
+                  <p className="text-xs text-gray-500">
+                    Phone
+                  </p>
+
+                  <p className="mt-0.5 text-sm text-gray-400 transition-colors group-hover:text-emerald-400">
+                    +92 300 0000000
+                  </p>
+                </div>
+              </a>
+
+              {/* Email */}
+              <a
+                href="mailto:info@greennest.com"
+                className="group flex gap-3"
+              >
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
+                  <Mail size={17} />
+                </div>
+
+                <div>
+                  <p className="text-xs text-gray-500">
+                    Email
+                  </p>
+
+                  <p className="mt-0.5 break-all text-sm text-gray-400 transition-colors group-hover:text-emerald-400">
+                    info@greennest.com
+                  </p>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Footer */}
-      <div className="bg-lime-950 text-white">
-        <div className="container mx-auto px-4 py-5 flex flex-col sm:flex-row justify-between items-center sm:gap-4 gap-2 text-sm">
-          <h6>
-            © 2025 Poultry Farm. All Rights Reserved.
-          </h6>
+        {/* ================= BOTTOM ================= */}
 
-          <div className="flex 2xl:gap-8 sm:gap-6 gap-4">
-            <a href="#" className="hover:text-lime-500 transition">Privacy Policy</a>
-            <a href="#" className="hover:text-lime-500 transition">Terms & Conditions</a>
+        <div className="mt-16 border-t border-white/[0.07] pt-7">
+
+          <div className="flex flex-col gap-4 text-sm text-gray-500 sm:flex-row sm:items-center sm:justify-between">
+
+            <p>
+              © {currentYear} GreenNest Poultry Farm. All rights reserved.
+            </p>
+
+            <div className="flex items-center gap-5">
+              <Link
+                to="/privacy-policy"
+                className="transition-colors hover:text-emerald-400"
+              >
+                Privacy Policy
+              </Link>
+
+              <Link
+                to="/terms"
+                className="transition-colors hover:text-emerald-400"
+              >
+                Terms & Conditions
+              </Link>
+            </div>
           </div>
+
         </div>
       </div>
     </footer>

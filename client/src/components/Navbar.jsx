@@ -1,191 +1,177 @@
 import React, { useState } from "react";
-import { Link, NavLink } from 'react-router-dom';
-import { FaFacebookF, FaLinkedinIn, FaYoutube } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
-import logo from '../assets/logo.png'
-import { RiMenu3Line } from "react-icons/ri";
-import { IoClose } from "react-icons/io5";
-import { IoHomeSharp } from "react-icons/io5";
-import { HiUsers } from "react-icons/hi2";
-import { FaFilePen } from "react-icons/fa6";
-import { BsFillTelephoneFill } from "react-icons/bs";
-import { RiSettings3Fill } from "react-icons/ri";
-import { FaUser } from "react-icons/fa6";
+import { motion, AnimatePresence } from "motion/react";
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  ChevronDown,
+  Egg,
+} from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const [menu, setMenu] = useState(false);
-  const [sticky, setSticky] = useState(false);
-  const [mobileNavLinks, setMobileNavLinks] = useState("Home");
+  const [isOpen, setIsOpen] = useState(false);
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 20) {
-      setSticky(true)
-    } else {
-      setSticky(false)
-    }
-  })
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Products", path: "/products" },
+    { name: "Blogs", path: "/blogs" },
+    { name: "Contact", path: "/contact" },
+  ];
 
   return (
-    <>
-      {/* Top Bar */}
-      <div className="bg-gray-800 text-white 2xl:text-xs text-[11px] sm:block hidden">
-        <div className="flex justify-between items-center 2xl:px-8 px-6 py-1.5">
-          <div className="flex gap-6 font-medium uppercase">
-            <Link>Privacy Policy</Link>
-            <Link>Term,s & Conditions</Link>
-          </div>
+    <header className="fixed left-0 top-0 z-50 w-full border border-white/10 bg-[#07130B]/75 shadow-2xl shadow-black/20 backdrop-blur-xl">
+      <nav className="container mx-auto px-5 py-4 md:px-8 lg:px-12">
 
-          <div className="flex items-center 2xl:text-sm text-[12.8px]">
-            <span>
-              <a href="#" className="cursor-pointer flex items-center justify-center 2xl:w-7 2xl:h-7 w-6 h-6 rounded-full border border-white/50 hover:bg-white hover:text-black transition duration-100 hover:shadow-none hover:border-none">
-                <FaFacebookF />
-              </a>
-            </span>
-            <a href="#" className="cursor-pointer mx-2.5 flex items-center justify-center 2xl:w-7 2xl:h-7 w-6 h-6 rounded-full border border-white/50 hover:bg-white hover:text-black transition duration-100 hover:shadow-none hover:border-none">
-              <FaLinkedinIn />
-            </a>
-            <span>
-              <a href="#" className="cursor-pointer flex items-center justify-center 2xl:w-7 2xl:h-7 w-6 h-6 rounded-full border border-white/50 hover:bg-white hover:text-black transition duration-100 hover:shadow-none hover:border-none">
-                <FaYoutube />
-              </a>
-            </span>
-            <a href="#" className="cursor-pointer ml-2.5 text-md flex items-center justify-center 2xl:w-7 2xl:h-7 w-6 h-6 rounded-full border border-white/50 hover:bg-white hover:text-black transition duration-100 hover:shadow-none hover:border-none">
-              <IoLogoWhatsapp />
-            </a>
-          </div>
-        </div>
-      </div>
+        <div className="flex items-center justify-between">
 
-      {/* Main Navbar */}
-      <nav className={`max-lg:bg-gray-200 bg-white shadow-sm z-40 sticky top-0 ${sticky ? "shadow-xl max-lg:bg-white" : "shadow-none max-lg:bg-gray-200"}`}>
-        <div className="container mx-auto px-5 flex items-center justify-between 2xl:h-[90px] sm:h-[80px] h-[77px]">
+          {/* ================= LOGO ================= */}
+          <Link
+            to="/"
+            onClick={() => {
+              scrollTo(0, 0);
+              setIsOpen(false);
+            }}
+            className="group flex items-center gap-3"
+          >
+            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-lg shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105">
+              <Egg size={22} strokeWidth={2.3} />
 
-          {/* Logo */}
-          <figure className="flex items-center cursor-pointer">
-            <img
-              src={logo}
-              alt="logo"
-              onClick={() => { scrollTo(0, 0) }}
-              className="max-h-[70px] w-full"
-            />
-          </figure>
+              <span className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
+            </div>
 
-          {/* Menu */}
-          <ul className={`xl:flex hidden items-center gap-10 text-sm uppercase text-slate-900 tracking-widest font-medium`}>
-            <NavLink onClick={() => { scrollTo(0, 0) }} to={'/'} className="group relative hover:text-lime-600 transition flex items-center gap-2">
-              <span className="text-xl text-lime-800"><IoHomeSharp /></span>
-              Home
-              <span className="absolute -bottom-3 left-1 h-1 bg-lime-500 group-hover:w-[80%] w-0 rounded-full transition-all duration-300" />
-            </NavLink>
+            <div className="leading-none">
+              <p className="text-lg font-extrabold tracking-tight text-white leading-none">
+                Green<span className="text-emerald-400">Nest</span>
+              </p>
 
-            <NavLink onClick={() => { scrollTo(0, 0) }} to={'/about'} className="group relative hover:text-lime-600 transition flex items-center gap-2">
-              <span className="text-xl text-lime-800"><HiUsers /></span>
-              About
-              <span className="absolute -bottom-3 left-1 h-1 bg-lime-500 group-hover:w-[80%] w-0 rounded-full transition-all duration-300" />
-            </NavLink>
+              <p className="mt-1.5 text-[11px] font-medium uppercase tracking-[0.22em] text-gray-500">
+                Poultry Farm
+              </p>
+            </div>
+          </Link>
 
-            <NavLink onClick={() => { scrollTo(0, 0) }} to={'/services'} className="group relative hover:text-lime-600 transition flex items-center gap-2">
-              <span className="text-xl text-lime-800"><RiSettings3Fill /></span>
-              Services
-              <span className="absolute -bottom-3 left-1 h-1 bg-lime-500 group-hover:w-[80%] w-0 rounded-full transition-all duration-300" />
-            </NavLink>
-
-            <NavLink onClick={() => { scrollTo(0, 0) }} to={'/blogs'} className="group relative hover:text-lime-600 transition flex items-center gap-2">
-              <span className="text-xl text-lime-800"><FaFilePen /></span>
-              Blogs
-              <span className="absolute -bottom-3 left-1 h-1 bg-lime-500 group-hover:w-[80%] w-0 rounded-full transition-all duration-300" />
-            </NavLink>
-
-            <NavLink onClick={() => { scrollTo(0, 0) }} to={'/contact'} className="group relative hover:text-lime-600 transition flex items-center gap-2">
-              <span className="text-xl text-lime-800"><BsFillTelephoneFill /></span>
-              Contact
-              <span className="absolute -bottom-3 left-1 h-1 bg-lime-500 group-hover:w-[80%] w-0 rounded-full transition-all duration-300" />
-            </NavLink>
-
-          </ul>
-
-          {/* Mobile Menu */}
-          <ul className={`mobile_nav_links w-[70%] md:max-w-[350px] sm:max-w-[330px] max-w-[270px] mx-auto pt-16 xl:hidden flex flex-col justify-center text-[13.3px] uppercase text-slate-900 tracking-[0.2px] font-medium bg-white z-50 fixed top-0 right-0 min-h-screen transition-all duration-200 ${menu ? "right-0" : "right-[-100%]"}`}>
-
-            {/* close menu */}
-            <span onClick={() => { setMenu(false) }} className="absolute top-0 left-0 bg-red-500 text-white cursor-pointer text-lg w-8 h-8 flex items-center justify-center">
-              <IoClose />
-            </span>
-            {/* Logo */}
-            <figure className="flex items-center 2xl:pl-16 sm:pl-10 pl-6 cursor-pointer mb-8">
-              <img
-                src={logo}
-                alt="logo"
-                className="max-h-[70px]"
-              />
-            </figure>
-            <div>
-              <Link to={'/'} onClick={() => { scrollTo(0, 0); setMenu(false); setMobileNavLinks("Home") }} className={`flex items-center gap-2 px-5 py-4 ${mobileNavLinks === "Home" ? "bg-indigo-50 text-lime-600" : "bg-none"}`}>
-                <span className="text-xl text-lime-800"><IoHomeSharp /></span>
-                Home
-              </Link>
-
-              <Link to={'/about'} onClick={() => { scrollTo(0, 0); setMenu(false); setMobileNavLinks("About") }} className={`flex items-center gap-2 px-5 py-4 ${mobileNavLinks === "About" ? "bg-indigo-50 text-lime-600" : "bg-none"}`}>
-                <span className="text-xl text-lime-800"><HiUsers /></span>
-                About Us
-              </Link>
-
-              <Link to={'/services'} onClick={() => { scrollTo(0, 0); setMenu(false); setMobileNavLinks("Services") }} className={`flex items-center gap-2 px-5 py-4 ${mobileNavLinks === "Services" ? "bg-indigo-50 text-lime-600" : "bg-none"}`}>
-                <span className="text-xl text-lime-800"><RiSettings3Fill /></span>
-                Services
-              </Link>
-
-              <Link to={'/blogs'} onClick={() => { scrollTo(0, 0); setMenu(false); setMobileNavLinks("Blogs") }} className={`flex items-center gap-2 px-5 py-4 ${mobileNavLinks === "Blogs" ? "bg-indigo-50 text-lime-600" : "bg-none"}`}>
-                <span className="text-xl text-lime-800"><FaFilePen /></span>
-                Blogs
-              </Link>
-
-              <Link to={'/contact'} onClick={() => { scrollTo(0, 0); setMenu(false); setMobileNavLinks("Contact") }} className={`flex items-center gap-2 px-5 py-4 ${mobileNavLinks === "Contact" ? "bg-indigo-50 text-lime-600" : "bg-none"}`}>
-                <span className="text-xl text-lime-800"><BsFillTelephoneFill /></span>
-                Contact Us
-              </Link>
-
-              {/* Mobile Siginin */}
-              <div
-                className="sm:hidden flex justify-center w-fit mx-5 bg-lime-600 hover:bg-lime-500 cursor-pointer transition duration-200 text-white items-center px-10 2xl:py-4 py-3.5 font-medium h-full rounded-xl text-sm tracking-wider my-4"
+          {/* ================= DESKTOP NAV ================= */}
+          <div className="hidden items-center gap-1 lg:flex">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                onClick={() => scrollTo(0, 0)}
+                className={({ isActive }) =>
+                  `relative rounded-xl px-4 py-2 font-medium transition-all duration-200 text-[15px] ${
+                    isActive
+                      ? "text-emerald-400"
+                      : "text-gray-300 hover:bg-white/5 hover:text-white"
+                  }`
+                }
               >
-                <h5 style={{fontFamily:"Poppins"}} className="flex items-center gap-2 font-semibold uppercase tracking-[1.6px]"><span><FaUser /></span> Login</h5>
-              </div>
-            </div>
+                {({ isActive }) => (
+                  <>
+                    {item.name}
 
-            <div className="bg-lime-800 text-white px-5 py-8 mt-4 flex flex-col items-center">
-              {/* Phone */}
-              <div className="flex items-center gap-2.5">
-                <span className="text-lg border border-white/50 w-10 h-10 rounded-full flex items-center justify-center"><BsFillTelephoneFill /></span>
-                <div>
-                  <p className="capitalize">Call Us Anytime</p>
-                  <h4 className="text-base leading-[1.3em]">+92 318 587 8868</h4>
-                </div>
-              </div>
-            </div>
-
-          </ul>
-
-
-          {/* Phone Section */}
-          <div className="flex items-center">
-
-            {/* Menu Icon */}
-            <span onClick={() => { setMenu(true) }} className="text-2xl block xl:hidden cursor-pointer text-gray-950 md:mr-8 sm:mr-6">
-              <RiMenu3Line />
-            </span>
-            <div
-              className="sm:flex justify-center hidden min-w-[150px] 2xl:min-w-[160px] bg-lime-600 hover:bg-lime-500 cursor-pointer transition duration-200 text-white items-center px-10 2xl:py-4 py-3.5 font-medium h-full rounded-xl text-[15px]"
-            >
-              <h5 style={{fontFamily:"Poppins"}} className="flex items-center gap-2 font-semibold uppercase tracking-[1.6px] text-sm"><span><FaUser /></span> Login</h5>
-            </div>
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeNav"
+                        className="absolute bottom-0 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-emerald-400"
+                      />
+                    )}
+                  </>
+                )}
+              </NavLink>
+            ))}
           </div>
 
+          {/* ================= DESKTOP CTA ================= */}
+          <div className="hidden lg:block">
+            <Link
+              to="/contact"
+              onClick={() => scrollTo(0, 0)}
+              className="group inline-flex items-center gap-2 rounded-xl text-sm bg-emerald-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-emerald-400"
+            >
+              Get Started
+
+              <ArrowUpRight
+                size={16}
+                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </Link>
+          </div>
+
+          {/* ================= MOBILE BUTTON ================= */}
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-200 transition hover:bg-white/10 lg:hidden"
+            aria-label="Toggle navigation"
+          >
+            {isOpen ? <X size={21} /> : <Menu size={21} />}
+          </button>
         </div>
-        {/* Overlay */}
-        <div onClick={() => { setMenu(false) }} className={`w-full h-screen bg-green-950/50 fixed top-0 left-0 z-40 xl:hidden ${menu ? "block" : "hidden"}`}></div>
+
+        {/* ================= MOBILE MENU ================= */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden lg:hidden"
+            >
+              <div className="mt-3 border-t border-white/10 pt-3">
+                <div className="space-y-1">
+                  {navItems.map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -15 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: index * 0.05,
+                      }}
+                    >
+                      <NavLink
+                        to={item.path}
+                        onClick={() => {
+                          scrollTo(0, 0);
+                          setIsOpen(false);
+                        }}
+                        className={({ isActive }) =>
+                          `flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition ${
+                            isActive
+                              ? "bg-emerald-400/10 text-emerald-400"
+                              : "text-gray-300 hover:bg-white/5 hover:text-white"
+                          }`
+                        }
+                      >
+                        {item.name}
+
+                        <ArrowUpRight size={15} />
+                      </NavLink>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Mobile CTA */}
+                <Link
+                  to="/contact"
+                  onClick={() => {
+                    scrollTo(0, 0);
+                    setIsOpen(false);
+                  }}
+                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-white transition hover:bg-emerald-400"
+                >
+                  Get Started
+                  <ArrowUpRight size={17} />
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
-    </>
+    </header>
   );
 };
 

@@ -1,73 +1,206 @@
 import React from "react";
+import { motion } from "motion/react";
 import {
-  FaFacebookF,
-  FaLinkedinIn,
-  FaTwitter,
-  FaStar,
-} from "react-icons/fa";
-import { useInView } from "react-intersection-observer";
+  ArrowUpRight,
+  // Facebook,
+  // Instagram,
+  // Linkedin,
+} from "lucide-react";
 
-const TeamSection = () => {
-  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
+const Team = () => {
   const teamMembers = [
-    { id: 1, img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200", name: 'Morgan Lee', role: 'UX Designer', desc: 'Shapes seamless user journeys through deep research and empathetic experience design.' },
-    { id: 3, img: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/team/user-3.png", name: 'Parker Smith', role: 'Frontend Developer', desc: 'Crafts responsive, high-performance web applications with clean and maintainable code.' },
-    { id: 4, img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200", name: 'Watson Cley', role: 'UI Engineer', desc: 'Bridges design and engineering by building robust, pixel-perfect component libraries.' }
+    {
+      name: "Ahmed Khan",
+      role: "Farm Director",
+      image:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=85",
+      description:
+        "Leading our farm operations with a focus on quality, innovation, and sustainable growth.",
+    },
+    {
+      name: "Sarah Williams",
+      role: "Poultry Specialist",
+      image:
+        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=85",
+      description:
+        "Focused on bird health, farm care, and maintaining high standards across our operations.",
+    },
+    {
+      name: "James Wilson",
+      role: "Farm Operations Manager",
+      image:
+        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=85",
+      description:
+        "Managing daily operations and ensuring efficient, consistent, and reliable farm performance.",
+    },
+    {
+      name: "Maria Anderson",
+      role: "Quality & Sustainability",
+      image:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=85",
+      description:
+        "Driving responsible farming practices and maintaining our commitment to quality.",
+    },
+  ];
+
+  const socials = [
+    // {
+    //   icon: Linkedin,
+    //   label: "LinkedIn",
+    // },
+    // {
+    //   icon: Instagram,
+    //   label: "Instagram",
+    // },
+    // {
+    //   icon: Facebook,
+    //   label: "Facebook",
+    // },
   ];
 
   return (
-    <>
-      <style>
-        {`
-                    @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
-                    *{ font-family: "Geist", sans-serif; }
-                `}
-      </style>
-      <section className='container mx-auto px-5 flex flex-col items-center justify-center gap-6 sm:pt-24 pt-20'>
-        {/* Heading */}
-        <div className="max-w-4xl mx-auto text-center mb-14">
-          <h6 className="text-lime-600 uppercase tracking-[3px] font-semibold"> Our Expert Team </h6>
-          <h2 className="2xl:text-5xl sm:text-[40px] text-3xl font-bold 2xl:mt-3 mt-2 leading-tight"> The People Behind <span className="text-lime-600" style={{ fontFamily: "Merriweather" }}> Our Success</span></h2>
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <div className="w-20 h-[2px] bg-lime-600"></div>
-            <div className="w-3 h-3 rounded-full bg-lime-600"></div>
-            <div className="w-20 h-[2px] bg-lime-600"></div>
+    <section
+      id="team"
+      className="relative overflow-hidden bg-[#07130B] text-white py-16 sm:py-20 2xl:py-22"
+    >
+      {/* ================= BACKGROUND ================= */}
+
+      <div className="absolute left-[-180px] top-1/4 h-96 w-96 rounded-full bg-emerald-500/[0.06] blur-[140px]" />
+
+      <div className="absolute right-[-150px] bottom-1/4 h-96 w-96 rounded-full bg-lime-400/[0.05] blur-[140px]" />
+
+      {/* Grid */}
+      <div
+        className="absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)",
+          backgroundSize: "70px 70px",
+        }}
+      />
+
+      {/* ================= CONTENT ================= */}
+
+      <div className="relative z-10 container mx-auto px-5 py-4 md:px-8 lg:px-12">
+
+        {/* ================= HEADER ================= */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7 }}
+          className="mx-auto mb-16 max-w-3xl text-center"
+        >
+          {/* Badge */}
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/[0.07] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300 backdrop-blur-xl">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            Meet Our Team
           </div>
-          <p className="mt-6 text-slate-700 max-w-2xl mx-auto"> Our dedicated team works with passion and commitment to ensure healthy poultry, premium quality products, and excellent customer satisfaction. </p>
-        </div>
 
-        <div className="team_parent grid lg:grid-cols-3 grid-cols-2 gap-8 items-center justify-center w-full">
-          {teamMembers.map((team, index) => (
-            <div key={index} ref={ref} style={{transitionDelay:`${index * 120}ms`}} className={`box ${inView ? "show" : ""} group min-h-[350px] flex flex-col items-center justify-center px-4 py-10 sm:bg-lime-50 bg-[#f7fbf1] rounded-3xl w-full cursor-pointer border border-slate-200 hover:border-slate-300 hover:shadow-lime-200 transition`}>
-              <img className="w-24 h-24 rounded-full" src={team.img} alt={team.name} />
-              <h2 className="text-xl font-semibold mt-2.5 mb-0.5 text-gray-900">{team.name}</h2>
-              <p className="text-gray-500 font-medium">{team.role}</p>
-              <p className="text-center text-gray-500 w-3/4 mt-4 text-[15px]">{team.desc}</p>
-              {/* <div className="flex items-center space-x-4 mt-6 text-gray-500">
-                <a href="#">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.882 0H1.167A1.16 1.16 0 0 0 0 1.161V14.84C0 15.459.519 16 1.167 16H14.83a1.16 1.16 0 0 0 1.166-1.161V1.135C16.048.516 15.53 0 14.882 0M4.744 13.6H2.385V5.987h2.36zM3.552 4.929c-.778 0-1.374-.62-1.374-1.368a1.38 1.38 0 0 1 1.374-1.367 1.38 1.38 0 0 1 1.374 1.367c0 .749-.57 1.368-1.374 1.368M11.33 13.6V9.91c0-.878-.026-2.039-1.245-2.039-1.244 0-1.426.98-1.426 1.961V13.6H6.3V5.987h2.307v1.058h.026c.337-.62 1.09-1.239 2.256-1.239 2.411 0 2.852 1.549 2.852 3.665V13.6z" fill="currentColor" />
-                  </svg>
-                </a>
-                <a href="#">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.095 0H1.905C.855 0 0 .854 0 1.905v12.19C0 15.145.854 16 1.905 16h12.19c1.05 0 1.905-.854 1.905-1.905V1.905C16 .855 15.146 0 14.095 0m-1.521 6.98a2.85 2.85 0 0 1-2.651-1.277v4.395A3.248 3.248 0 1 1 6.674 6.85c.068 0 .134.006.201.01v1.6c-.067-.007-.132-.02-.2-.02a1.658 1.658 0 1 0 0 3.316c.915 0 1.724-.721 1.724-1.637l.016-7.465h1.531a2.85 2.85 0 0 0 2.63 2.547v1.78" fill="currentColor" />
-                  </svg>
-                </a>
-                <a href="#">
-                  <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m16.358 2.613 1.128-1.425c.326-.386.416-.683.445-.832-.89.535-1.722.713-2.256.713h-.208L15.348.95A3.83 3.83 0 0 0 12.795 0c-2.078 0-3.71 1.722-3.71 3.71 0 .12 0 .298.03.417l.088.593-.623-.03C4.78 4.573 1.663 1.307 1.158.743c-.831 1.485-.356 2.91.148 3.8l1.01 1.663-1.603-.89q.044 1.87 1.425 2.938l.801.594-.801.326c.504 1.515 1.632 2.138 2.464 2.375l1.098.297-1.04.713C2.999 13.745.92 13.656 0 13.568c1.87 1.305 4.097 1.602 5.64 1.602 1.158 0 2.02-.118 2.227-.207 8.313-1.96 8.699-9.382 8.699-10.866v-.208l.178-.119c1.01-.95 1.425-1.454 1.662-1.751-.089.03-.208.089-.326.119z" fill="currentColor" />
-                  </svg>
-                </a>
-              </div> */}
-            </div>
+          {/* Heading */}
+          <h2 className="text-4xl font-extrabold leading-[1.1em] tracking-[-0.035em] sm:text-5xl 2xl:text-6xl">
+            The People Behind
+            <span className="block bg-gradient-to-r from-emerald-300 to-lime-300 bg-clip-text text-transparent">
+              Better Farming.
+            </span>
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-2xl text-base sm:leading-7 text-gray-400 sm:text-lg">
+            Our experienced team works together every day to maintain healthy
+            birds, reliable operations, and the highest standards of poultry
+            farming.
+          </p>
+        </motion.div>
+
+        {/* ================= TEAM GRID ================= */}
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {teamMembers.map((member, index) => (
+            <motion.article
+              key={member.name}
+              initial={{
+                opacity: 0,
+                y: 35,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+                amount: 0.15,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.1,
+              }}
+              className="group relative overflow-hidden rounded-[28px] border border-white/[0.08] bg-white/[0.025] transition-all duration-500 hover:-translate-y-2 hover:border-emerald-400/20 hover:bg-emerald-400/[0.035]"
+            >
+              {/* ================= IMAGE ================= */}
+
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="h-full w-full object-cover object-center grayscale-[15%] transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                />
+
+                {/* Image overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#061109] via-[#061109]/10 to-transparent" />
+
+                {/* Role badge */}
+                <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/30 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-300 backdrop-blur-xl">
+                  {member.role}
+                </div>
+
+                {/* Social icons */}
+                <div className="absolute bottom-4 right-4 flex translate-y-3 gap-1.5 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  {socials.map(({ icon: Icon, label }) => (
+                    <a
+                      key={label}
+                      href="#"
+                      aria-label={`${member.name} ${label}`}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/15 bg-black/40 text-white backdrop-blur-md transition hover:bg-emerald-500 hover:text-white"
+                    >
+                      <Icon size={14} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* ================= CONTENT ================= */}
+
+              <div className="p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white">
+                      {member.name}
+                    </h3>
+
+                    <p className="mt-1 text-xs sm:text-sm font-medium text-emerald-400">
+                      {member.role}
+                    </p>
+                  </div>
+
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 text-gray-500 transition-all duration-300 group-hover:border-emerald-400/30 group-hover:bg-emerald-400/10 group-hover:text-emerald-400">
+                    <ArrowUpRight size={15} />
+                  </div>
+                </div>
+
+                <p className="mt-4 text-sm leading-6 text-gray-500">
+                  {member.description}
+                </p>
+              </div>
+
+              {/* Bottom line */}
+              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-emerald-400 to-lime-300 transition-all duration-500 group-hover:w-full" />
+            </motion.article>
           ))}
-
         </div>
-
-      </section>
-    </>
-  )
+      </div>
+    </section>
+  );
 };
 
-export default TeamSection;
+export default Team;
