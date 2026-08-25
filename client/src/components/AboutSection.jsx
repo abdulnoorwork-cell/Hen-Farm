@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// import about_image from "../assets/about.avif";
+import aboutImage from "../assets/about.jpg";
 
 const About = () => {
   const features = [
@@ -101,7 +101,7 @@ const About = () => {
             <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-2 shadow-2xl shadow-black/30">
               <div className="relative overflow-hidden rounded-[26px]">
                 <img
-                  src="/src/assets/about.jpg"
+                  src={aboutImage}
                   alt="Poultry farming"
                   className="h-[450px] w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-[550px] xl:h-[600px]"
                 />

@@ -140,7 +140,6 @@ const Dashboard = () => {
                 border
                 border-slate-200
                 p-5
-                hover:shadow-md
                 transition
               "
           >

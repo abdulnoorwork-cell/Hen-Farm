@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
     LayoutDashboard,
@@ -6,9 +6,11 @@ import {
     PlusCircle,
     FileText,
     PenSquare,
+    X,
 } from "lucide-react";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, setIsOpen }) => {
+
     const menuItems = [
         {
             name: "Dashboard",
@@ -37,71 +39,304 @@ const Sidebar = () => {
         },
     ];
 
+    // Prevent background scrolling when mobile sidebar is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [isOpen]);
+
     return (
-        <aside className="h-screen w-[260px] bg-white border-r border-gray-200 flex flex-col">
+        <>
+            {/* ================= MOBILE OVERLAY ================= */}
 
-            {/* Logo */}
-            <div className="flex flex-col justify-center border-b border-gray-100 p-6">
-                <h2 className="text-3xl font-extrabold tracking-tight">
-                    Dashboard
-                </h2>
-                <p className="text-sm text-slate-500 mt-0.5">
-                    Welcome back, Abdul Noor 👋
-                </p>
-            </div>
+            <div
+                onClick={() => setIsOpen(false)}
+                className={`
+                    fixed
+                    inset-0
+                    bg-black/40
+                    backdrop-blur-[2px]
+                    z-40
+                    lg:hidden
+                    transition-opacity
+                    duration-300
+                    ${
+                        isOpen
+                            ? "opacity-100 visible"
+                            : "opacity-0 invisible"
+                    }
+                `}
+            />
 
-            {/* Navigation */}
-            <div className="flex-1 px-4 py-6">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-4">
-                    Main Menu
-                </p>
+            {/* ================= SIDEBAR ================= */}
 
-                <div className="space-y-2">
-                    {menuItems.map((item) => {
-                        const Icon = item.icon;
+            <aside
+                className={`
+                    fixed
+                    lg:sticky
+                    top-0
+                    left-0
+                    z-50
+                    h-screen
+                    w-[250px]
+                    sm:w-[260px]
+                    lg:w-[240px]
+                    bg-white
+                    border-r
+                    border-gray-200
+                    flex
+                    flex-col
+                    shrink-0
 
-                        return (
-                            <NavLink
-                                key={item.path}
-                                to={item.path}
-                                end
-                                className={({ isActive }) =>
-                                    `group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${isActive
-                                        ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
-                                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                                    }`
-                                }
-                            >
-                                <Icon size={20} />
+                    transform
+                    transition-transform
+                    duration-300
+                    ease-in-out
 
-                                <span className="font-medium text-sm">
-                                    {item.name}
-                                </span>
-                            </NavLink>
-                        );
-                    })}
-                </div>
-            </div>
+                    ${
+                        isOpen
+                            ? "translate-x-0"
+                            : "-translate-x-full lg:translate-x-0"
+                    }
+                `}
+            >
 
-            {/* Footer */}
-            <div className="border-t border-gray-100 p-4">
-                <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
-                        A
+                {/* ================= LOGO ================= */}
+
+                <div className="
+                    relative
+                    border-b
+                    border-gray-100
+                    px-5
+                    py-6
+                ">
+
+                    {/* Mobile Close */}
+
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="
+                            lg:hidden
+                            absolute
+                            right-4
+                            top-5
+                            w-9
+                            h-9
+                            rounded-lg
+                            flex
+                            items-center
+                            justify-center
+                            text-gray-500
+                            hover:bg-gray-100
+                            hover:text-gray-900
+                            transition
+                        "
+                    >
+                        <X size={20} />
+                    </button>
+
+                    {/* Brand */}
+
+                    <div className="flex items-center gap-3">
+
+                        <div className="
+                            w-11
+                            h-11
+                            rounded-xl
+                            bg-blue-600
+                            text-white
+                            flex
+                            items-center
+                            justify-center
+                            shadow-lg
+                            shadow-blue-600/20
+                        ">
+                            <LayoutDashboard size={21} />
+                        </div>
+
+                        <div>
+
+                            <h2 className="
+                                text-lg
+                                font-bold
+                                tracking-tight
+                                text-gray-900
+                            ">
+                                Dashboard
+                            </h2>
+
+                            <p className="
+                                text-xs
+                                text-gray-400
+                                mt-0.5
+                            ">
+                                Admin Panel
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div>
-                        <h4 className="font-semibold text-sm">
-                            Abdul Noor
-                        </h4>
-                        <p className="text-xs text-gray-500">
-                            Administrator
-                        </p>
-                    </div>
                 </div>
-            </div>
 
-        </aside>
+
+                {/* ================= NAVIGATION ================= */}
+
+                <div className="
+                    flex-1
+                    overflow-y-auto
+                    px-4
+                    py-6
+                ">
+
+                    <p className="
+                        text-xs
+                        font-bold
+                        text-gray-600
+                        uppercase
+                        tracking-[0.15em]
+                        px-3
+                        mb-3
+                    ">
+                        Main Menu
+                    </p>
+
+
+                    <div className="space-y-1.5">
+
+                        {menuItems.map((item) => {
+
+                            const Icon = item.icon;
+
+                            return (
+                                <NavLink
+                                    key={item.path}
+                                    to={item.path}
+                                    end
+                                    onClick={() => setIsOpen(false)}
+                                    className={({ isActive }) =>
+                                        `
+                                        group
+                                        relative
+                                        flex
+                                        items-center
+                                        gap-3
+                                        px-3.5
+                                        py-3
+                                        rounded-xl
+                                        transition-all
+                                        duration-200
+
+                                        ${
+                                            isActive
+                                                ? `
+                                                    bg-blue-600
+                                                    text-white
+                                                    shadow-md
+                                                    shadow-blue-600/20
+                                                `
+                                                : `
+                                                    text-gray-700
+                                                    hover:bg-gray-50
+                                                    hover:text-gray-900
+                                                `
+                                        }
+                                        `
+                                    }
+                                >
+
+                                    <Icon
+                                        size={19}
+                                        strokeWidth={2}
+                                        className="
+                                            shrink-0
+                                        "
+                                    />
+
+                                    <span className="
+                                        font-medium
+                                        text-sm
+                                    ">
+                                        {item.name}
+                                    </span>
+
+                                </NavLink>
+                            );
+                        })}
+
+                    </div>
+
+                </div>
+
+
+                {/* ================= USER ================= */}
+
+                <div className="
+                    border-t
+                    border-gray-100
+                    p-4
+                ">
+
+                    <div className="
+                        flex
+                        items-center
+                        gap-3
+                        bg-gray-50
+                        hover:bg-gray-100
+                        rounded-xl
+                        p-3
+                        transition
+                    ">
+
+                        <div className="
+                            w-10
+                            h-10
+                            shrink-0
+                            rounded-full
+                            bg-blue-600
+                            flex
+                            items-center
+                            justify-center
+                            text-white
+                            font-semibold
+                        ">
+                            A
+                        </div>
+
+                        <div className="min-w-0">
+
+                            <h4 className="
+                                font-semibold
+                                text-sm
+                                text-gray-900
+                                truncate
+                            ">
+                                Abdul Noor
+                            </h4>
+
+                            <p className="
+                                text-xs
+                                text-gray-500
+                                mt-0.5
+                            ">
+                                Administrator
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </aside>
+        </>
     );
 };
 
