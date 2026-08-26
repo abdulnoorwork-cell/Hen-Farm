@@ -18,6 +18,7 @@ import Products from './pages/Products'
 import AdminProducts from './pages/dashboard/Products'
 import SingleBlog from './pages/SingleBlog'
 import AddProduct from './pages/dashboard/AddProduct'
+import SingleProduct from './pages/SingleProduct'
 
 const App = () => {
   const isAdmin = true;
@@ -31,7 +32,8 @@ const App = () => {
           <Route path='/contact' element={<Contact />} />
           <Route path='/services' element={<Services />} />
           <Route path='/products' element={<Products />} />
-          <Route path='/blog/:id' element={<SingleBlog />} />
+          <Route path='/blogs/:id' element={<SingleBlog />} />
+          <Route path='/products/:id' element={<SingleProduct />} />
         </Route>
         <Route path='/my-account' element={<Authentication />} />
         {isAdmin ? <Route path='/dashboard' element={<Layout />}>

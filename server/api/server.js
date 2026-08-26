@@ -6,6 +6,7 @@ import fileUpload from 'express-fileupload'
 import '../config/db.js'
 import {v2 as cloudinary} from 'cloudinary'
 import blogRoutes from '../routes/blog.router.js';
+import productRoutes from '../routes/product.router.js';
 
 const Port = process.env.PORT || 8000;
 
@@ -26,14 +27,15 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-app.use('/api/blogs', blogRoutes);
+app.use('/api/blog', blogRoutes);
+app.use('/api/product', productRoutes);
 
 app.get('/',(_,res)=>{
     res.status(200).json({success:true,message:"Response From the server"})
 })
 
-// app.listen(Port,()=>{
-//     console.log(`Server is running on http://localhost:${Port}`)
-// })
+app.listen(Port,()=>{
+    console.log(`Server is running on http://localhost:${Port}`)
+})
 
 export default app;

@@ -4,8 +4,10 @@ import "quill/dist/quill.snow.css";
 import { LuPlus, LuUpload } from "react-icons/lu";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { AppContext } from '../../context/AppContext'
 
 const AddProduct = () => {
+    const { backendUrl, isAdmin, fetchProducts, navigate } = useContext(AppContext);
     const [error, setError] = useState('')
     const editorRef = useRef(null);
     const quillRef = useRef(null)
@@ -260,7 +262,7 @@ const AddProduct = () => {
 
                             {(error === "Please fill required fields" ||
                                 error === "Invalid format (jpg, jpeg, png, webp only)") && (
-                                    <p className="text-red-500 text-xs mt-3">
+                                    <p className="text-red-500 text-[13px] mt-3">
                                         {error}
                                     </p>
                                 )}
@@ -316,7 +318,7 @@ const AddProduct = () => {
 
                                 {(error === "Please fill required fields" ||
                                     error === "Name must be between 8-120 characters") && (
-                                        <p className="text-red-500 text-xs mt-2">
+                                        <p className="text-red-500 text-[13px] mt-2">
                                             {error}
                                         </p>
                                     )}
@@ -333,7 +335,7 @@ const AddProduct = () => {
                                     </label>
 
                                     <select
-                                        value={category}
+                                        defaultValue={0}
                                         onChange={(e) => setCategory(e.target.value)}
                                         className="
                       w-full
@@ -351,37 +353,29 @@ const AddProduct = () => {
                       focus:ring-blue-500/10
                     "
                                     >
-                                        <option value="">
+                                        <option disabled value={0}>
                                             Select Category
                                         </option>
 
-                                        <option value="Men">
-                                            Men
+                                        <option value="Fresh Eggs">
+                                            Fresh Eggs
                                         </option>
 
-                                        <option value="Women">
-                                            Women
+                                        <option value="Poultry">
+                                            Poultry
                                         </option>
 
-                                        <option value="Footwear">
-                                            Footwear
+                                        <option value="Feed">
+                                            Feed
                                         </option>
 
-                                        <option value="Apparel">
-                                            Apparel
-                                        </option>
-
-                                        <option value="Gymwear">
-                                            Gymwear
-                                        </option>
-
-                                        <option value="Activewear">
-                                            Activewear
+                                        <option value="Farm Products">
+                                            Farm Products
                                         </option>
                                     </select>
 
                                     {error === "Please fill required fields" && (
-                                        <p className="text-red-500 text-xs mt-2">
+                                        <p className="text-red-500 text-[13px] mt-2">
                                             {error}
                                         </p>
                                     )}
@@ -434,7 +428,7 @@ const AddProduct = () => {
                                     {(error === "Please fill required fields" ||
                                         error === "Price must be greater than 10" ||
                                         error === "Offer price must be less than price") && (
-                                            <p className="text-red-500 text-xs mt-2">
+                                            <p className="text-red-500 text-[13px] mt-2">
                                                 {error}
                                             </p>
                                         )}
@@ -478,7 +472,7 @@ const AddProduct = () => {
                                 error === "Please fill required fields" ||
                                 error === "Description must be at least 500 characters"
                             ) && (
-                                    <p className="text-red-500 text-xs mt-2">
+                                    <p className="text-red-500 text-[13px] mt-2">
                                         {error}
                                     </p>
                                 )}
@@ -578,6 +572,7 @@ const AddProduct = () => {
                   shadow-blue-600/20
                   transition-all
                   duration-300
+                  cursor-pointer
                 "
                             >
                                 <LuPlus size={18} />

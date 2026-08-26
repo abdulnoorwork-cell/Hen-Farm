@@ -1,17 +1,13 @@
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import {
-  ArrowRight,
-  ArrowUpRight,
-  CalendarDays,
-  Clock3,
   Search,
-  Sprout,
-  Tag,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
+import BlogCard from "../components/BlogCard";
 
 const Blogs = () => {
+  const { blogs } = useContext(AppContext)
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
 
@@ -21,106 +17,6 @@ const Blogs = () => {
     "Bird Health",
     "Nutrition",
     "Sustainability",
-  ];
-
-  const blogs = [
-    {
-      id: 1,
-      title: "Modern Poultry Farming: A Practical Guide for Better Productivity",
-      excerpt:
-        "Discover practical strategies for creating a healthier, more productive, and efficiently managed poultry farm.",
-      category: "Poultry Farming",
-      date: "Aug 18, 2026",
-      readTime: "6 min read",
-      author: "GreenNest Team",
-      image:
-        "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=85",
-      featured: true,
-    },
-    {
-      id: 2,
-      title: "How to Maintain a Healthy Environment for Poultry",
-      excerpt:
-        "Farm hygiene, ventilation, temperature, and daily monitoring can make a major difference in bird health.",
-      category: "Bird Health",
-      date: "Aug 14, 2026",
-      readTime: "5 min read",
-      author: "Farm Care Team",
-      image:
-        "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=1000&q=85",
-    },
-    {
-      id: 3,
-      title: "Understanding Poultry Nutrition and Feed Management",
-      excerpt:
-        "Learn why balanced nutrition and proper feed management are essential for healthy bird development.",
-      category: "Nutrition",
-      date: "Aug 10, 2026",
-      readTime: "7 min read",
-      author: "GreenNest Team",
-      image:
-        "https://images.unsplash.com/photo-1563281577-a7be47e20db9?auto=format&fit=crop&w=1000&q=85",
-    },
-    {
-      id: 4,
-      title: "Simple Ways to Make Your Poultry Farm More Sustainable",
-      excerpt:
-        "Explore responsible farming practices that can improve efficiency while reducing unnecessary resource waste.",
-      category: "Sustainability",
-      date: "Aug 06, 2026",
-      readTime: "5 min read",
-      author: "Sustainability Team",
-      image:
-        "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1000&q=85",
-    },
-    {
-      id: 5,
-      title: "Why Farm Hygiene Should Be Your Top Priority",
-      excerpt:
-        "A clean and controlled farm environment helps reduce risks and supports better overall poultry performance.",
-      category: "Bird Health",
-      date: "Jul 30, 2026",
-      readTime: "4 min read",
-      author: "Farm Care Team",
-      image:
-        "https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?auto=format&fit=crop&w=1000&q=85",
-    },
-    {
-      id: 6,
-      title: "Daily Poultry Farm Management Checklist",
-      excerpt:
-        "Use this practical checklist to keep track of important daily tasks and maintain smooth farm operations.",
-      category: "Poultry Farming",
-      date: "Jul 26, 2026",
-      readTime: "6 min read",
-      author: "GreenNest Team",
-      image:
-        "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1000&q=85",
-    },
-    {
-      id: 7,
-      title: "The Role of Clean Water in Poultry Production",
-      excerpt:
-        "Clean and accessible drinking water is one of the simplest but most important parts of poultry management.",
-      category: "Nutrition",
-      date: "Jul 21, 2026",
-      readTime: "4 min read",
-      author: "Farm Care Team",
-      image:
-        "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=1000&q=85",
-    },
-    {
-      id: 8,
-      title: "Building a More Efficient Poultry Operation",
-      excerpt:
-        "Small improvements in planning, monitoring, and resource management can lead to better farm efficiency.",
-      category: "Sustainability",
-      date: "Jul 16, 2026",
-      readTime: "6 min read",
-      author: "GreenNest Team",
-      image:
-        "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=1000&q=85",
-    },
   ];
 
   const filteredBlogs = useMemo(() => {
@@ -133,13 +29,11 @@ const Blogs = () => {
 
       const matchesSearch =
         !searchText ||
-        blog.title.toLowerCase().includes(searchText) ||
-        blog.excerpt.toLowerCase().includes(searchText) ||
-        blog.category.toLowerCase().includes(searchText);
+        blog.title.toLowerCase().includes(searchText)
 
-      return matchesCategory && matchesSearch && !blog.featured;
+      return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, search]);
+  }, [blogs,activeCategory, search]);
 
   return (
     <main className="overflow-hidden bg-[#061109] text-white">
@@ -286,84 +180,8 @@ const Blogs = () => {
                     duration: 0.5,
                     delay: index * 0.07,
                   }}
-                  className="group overflow-hidden rounded-[26px] border border-white/[0.08] bg-white/[0.025] transition-all duration-500 hover:-translate-y-2 hover:border-emerald-400/20"
                 >
-
-                  {/* Image */}
-
-                  <Link
-                    to={`/blogs/${blog.id}`}
-                    onClick={() => scrollTo(0, 0)}
-                    className="relative block aspect-[16/10] overflow-hidden"
-                  >
-
-                    <img
-                      src={blog.image}
-                      alt={blog.title}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-                    <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-300 backdrop-blur-xl">
-                      {blog.category}
-                    </span>
-
-                  </Link>
-
-                  {/* Content */}
-
-                  <div className="p-6">
-
-                    <div className="flex items-center gap-3 text-[11px] text-gray-600">
-
-                      <span className="flex items-center gap-1.5">
-                        <CalendarDays size={13} />
-                        {blog.date}
-                      </span>
-
-                      <span className="h-1 w-1 rounded-full bg-gray-700" />
-
-                      <span className="flex items-center gap-1.5">
-                        <Clock3 size={13} />
-                        {blog.readTime}
-                      </span>
-
-                    </div>
-
-                    <h3 className="mt-4 line-clamp-2 text-xl font-bold leading-snug tracking-tight transition-colors duration-300 group-hover:text-emerald-300">
-                      {blog.title}
-                    </h3>
-
-                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-gray-600">
-                      {blog.excerpt}
-                    </p>
-
-                    <div className="mt-6 flex items-center justify-between border-t border-white/[0.06] pt-5">
-
-                      <span className="text-xs text-gray-600">
-                        By {blog.author}
-                      </span>
-
-                      <Link
-                        to={`/blogs/${blog.id}`}
-                        onClick={() => scrollTo(0, 0)}
-                        className="group/read flex items-center gap-1.5 text-xs font-semibold text-emerald-400"
-                      >
-                        Read More
-
-                        <ArrowRight
-                          size={14}
-                          className="transition-transform duration-300 group-hover/read:translate-x-1"
-                        />
-                      </Link>
-
-                    </div>
-
-                  </div>
-
-                  <div className="h-[2px] w-0 bg-gradient-to-r from-emerald-400 to-lime-300 transition-all duration-500 group-hover:w-full" />
-
+                  <BlogCard key={blog.id} blog={blog} />
                 </motion.article>
               ))}
 

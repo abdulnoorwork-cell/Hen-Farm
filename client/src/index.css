@@ -15,8 +15,4 @@ a.active span {
     width: 75%;
 }
 
-.container {
-    max-width: 1400px
-}
-
 @import "tailwindcss";

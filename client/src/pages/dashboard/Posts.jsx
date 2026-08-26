@@ -1,43 +1,17 @@
-import React, { useState } from "react";
-import { FiEdit, FiTrash2, FiSearch, FiPlus } from "react-icons/fi";
+import React, { useContext, useState } from "react";
+import {
+  FiEdit,
+  FiTrash2,
+  FiSearch,
+  FiPlus,
+  FiCalendar,
+} from "react-icons/fi";
+import { AppContext } from "../../context/AppContext";
 
 export default function BlogList() {
   const [search, setSearch] = useState("");
 
-  const blogs = [
-    {
-      id: 1,
-      title: "Benefits of Organic Poultry Farming",
-      image:
-        "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500",
-      date: "23 Jul 2026",
-      category: "Published",
-    },
-    {
-      id: 2,
-      title: "How to Raise Healthy Chickens",
-      image:
-        "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=500",
-      date: "22 Jul 2026",
-      category: "Draft",
-    },
-    {
-      id: 3,
-      title: "Best Feed for Broiler Chickens",
-      image:
-        "https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=500",
-      date: "20 Jul 2026",
-      category: "Published",
-    },
-    {
-      id: 4,
-      title: "Poultry Farm Management Guide",
-      image:
-        "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500",
-      date: "18 Jul 2026",
-      category: "Draft",
-    },
-  ];
+  const { blogs, navigate } = useContext(AppContext);
 
   const filteredBlogs = blogs.filter((blog) =>
     blog.title.toLowerCase().includes(search.toLowerCase())
@@ -55,118 +29,108 @@ export default function BlogList() {
     <div className="space-y-6">
 
       {/* Search */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5">
-
+      <div className="bg-white sm:border sm:border-slate-200 rounded-2xl sm:p-5">
         <div className="relative">
-          <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-
+          <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
           <input
             type="text"
-            placeholder="Search posts..."
+            placeholder="Search blogs..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-12 pl-11 pr-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full h-12 pl-12 pr-4 border border-slate-300 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 max-sm:text-sm"
           />
         </div>
-
       </div>
 
-      {/* Table Card */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      {/* Blogs */}
+      {filteredBlogs.length > 0 ? (
+        <div className="grid gap-4">
+          {filteredBlogs.reverse().map((blog) => (
+            <div
+              key={blog.id}
+              className="bg-white border border-slate-200 rounded-2xl p-5 transition-all duration-300 hover:shadow-xl"
+            >
+              <div className="flex flex-col lg:flex-row gap-5">
+                {/* Image */}
+                <img
+                  src={blog.image?.url}
+                  alt={blog.title}
+                  className="w-full lg:w-56 h-40 object-cover rounded-xl"
+                />
 
-        <div className="overflow-x-auto">
-
-          <table className="w-full">
-
-            <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
-                <th className="px-6 py-4 text-left text-sm font-semibold">
-                  Post
-                </th>
-
-                <th className="px-6 py-4 text-left text-sm font-semibold">
-                  Date
-                </th>
-
-                <th className="px-6 py-4 text-left text-sm font-semibold">
-                  Status
-                </th>
-
-                <th className="px-6 py-4 text-right text-sm font-semibold">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {filteredBlogs.map((blog) => (
-                <tr
-                  key={blog.id}
-                  className="border-b border-slate-100 hover:bg-slate-50 transition"
-                >
-                  <td className="px-6 py-4">
-
-                    <div className="flex items-center gap-4">
-
-                      <img
-                        src={blog.image}
-                        alt=""
-                        className="w-20 h-14 rounded-xl object-cover"
-                      />
-
-                      <div>
-                        <h3 className="font-semibold text-slate-900">
-                          {blog.title}
-                        </h3>
-
-                        <p className="text-sm text-slate-500">
-                          Blog Article
-                        </p>
-                      </div>
-
-                    </div>
-
-                  </td>
-
-                  <td className="px-6 py-4 text-slate-500">
-                    {blog.date}
-                  </td>
-
-                  <td className="px-6 py-4">
-
+                {/* Content */}
+                <div className="flex-1">
+                  <div className="flex flex-wrap gap-2 mb-3">
                     <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">
                       {blog.category}
                     </span>
+                  </div>
 
-                  </td>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2 line-clamp-3">
+                    {blog.title}
+                  </h3>
 
-                  <td className="px-6 py-4">
+                  <p className="text-slate-500 line-clamp-2 text-sm" dangerouslySetInnerHTML={{
+                    __html: blog?.description
+                      ?.replace(
+                        /style="[^"]*color:[^";]+;?[^"]*"/gi,
+                        ""
+                      )
+                      ?.replace(/color:[^;"]+;?/gi, "")
+                  }}>
+                  </p>
 
-                    <div className="flex justify-end gap-2">
+                  <div className="flex items-center gap-2 mt-4 text-sm text-slate-500">
+                    <FiCalendar />
+                    {new Date(blog.created_at).toLocaleString()}
+                  </div>
+                </div>
 
-                      <button className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 transition">
-                        <FiEdit />
-                      </button>
+                {/* Actions */}
+                <div className="flex lg:flex-col gap-2">
+                  <button
+                    onClick={() => handleEdit(blog.id)}
+                    className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center"
+                  >
+                    <FiEdit />
+                  </button>
 
-                      <button className="w-10 h-10 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition">
-                        <FiTrash2 />
-                      </button>
+                  <button
+                    onClick={() => handleDelete(blog.id)}
+                    className="w-10 h-10 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center"
+                  >
+                    <FiTrash2 />
+                  </button>
 
-                    </div>
-
-                  </td>
-                </tr>
-              ))}
-
-            </tbody>
-
-          </table>
-
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
+      ) : (
+        <div className="bg-white border border-slate-200 rounded-2xl">
+          <div className="flex flex-col items-center justify-center py-24 px-6 text-center">
+            <div className="w-24 h-24 rounded-3xl bg-slate-100 flex items-center justify-center mb-6">
+              <FiPlus size={40} className="text-slate-400" />
+            </div>
 
-      </div>
+            <h2 className="text-2xl font-bold text-slate-900">
+              No Blogs Found
+            </h2>
 
+            <p className="text-slate-500 mt-3 max-w-md">
+              You haven't created any blog posts yet. Start writing your first
+              article and grow your content library.
+            </p>
+
+            <button
+              onClick={() => { navigate('/dashboard/add-post'); scrollTo(0, 0) }} className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition flex items-center gap-2">
+              <FiPlus />
+              Create First Blog
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
