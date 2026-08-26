@@ -13,7 +13,6 @@ const BlogCard = ({ blog }) => {
             {/* Image */}
 
             <Link
-                to={`/blogs/${blog.id}`}
                 onClick={() => scrollTo(0, 0)}
                 className="relative block aspect-[16/10] overflow-hidden"
             >
@@ -53,7 +52,6 @@ const BlogCard = ({ blog }) => {
                 </div>
 
                 <h3
-                 onClick={() => {navigate(`/blogs/${blog.id}`);scrollTo(0, 0)}}
                  className="mt-4 cursor-pointer line-clamp-2 text-xl font-bold leading-snug tracking-tight transition-colors duration-300 group-hover:text-emerald-300">
                     {blog.title}
                 </h3>
@@ -71,8 +69,6 @@ const BlogCard = ({ blog }) => {
                 <div className="mt-6 flex items-center justify-between border-t border-white/[0.06] pt-5">
 
                     <Link
-                        to={`/blogs/${blog.id}`}
-                        onClick={() => scrollTo(0, 0)}
                         className="group/read flex items-center gap-1.5 text-[13px] font-semibold text-emerald-400"
                     >
                         Read More

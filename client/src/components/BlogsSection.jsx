@@ -10,9 +10,47 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import BlogCard from "./BlogCard";
 
+export const latestBlogs = [
+  {
+    id: 1,
+    title: "Modern Poultry Farming: A Complete Guide To Better Productivity",
+    category: "Poultry Farming",
+    created_at: "2026-08-25",
+    image: {
+      url: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Discover modern poultry farming techniques that improve bird health, productivity, and overall farm profitability through better management practices."
+  },
+
+  {
+    id: 2,
+    title: "How To Maintain Healthy Poultry Birds Throughout The Year",
+    category: "Bird Health",
+    created_at: "2026-08-22",
+    image: {
+      url: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Learn essential health management strategies including vaccination, disease prevention, and daily care routines for stronger poultry flocks."
+  },
+
+  {
+    id: 3,
+    title: "Poultry Nutrition And Feed Management Best Practices",
+    category: "Nutrition",
+    created_at: "2026-08-18",
+    image: {
+      url: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Proper nutrition is key to poultry success. Explore feed management techniques that maximize growth, egg production, and bird performance."
+  }
+];
+
 const Blogs = () => {
 
-  const { latestBlogs } = useContext(AppContext);
+  // const { latestBlogs } = useContext(AppContext);
   
   return (
     <section

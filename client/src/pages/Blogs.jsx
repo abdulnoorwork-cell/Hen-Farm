@@ -6,8 +6,118 @@ import {
 import { AppContext } from "../context/AppContext";
 import BlogCard from "../components/BlogCard";
 
+export const blogs = [
+  {
+    id: 1,
+    title: "Modern Poultry Farming: A Complete Guide To Better Productivity",
+    category: "Poultry Farming",
+    created_at: "2026-08-25",
+    image: {
+      url: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Discover modern poultry farming techniques that improve bird health, productivity, and overall farm profitability through better management practices."
+  },
+
+  {
+    id: 2,
+    title: "How To Maintain Healthy Poultry Birds Throughout The Year",
+    category: "Bird Health",
+    created_at: "2026-08-22",
+    image: {
+      url: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Learn essential health management strategies including vaccination, disease prevention, and daily care routines for stronger poultry flocks."
+  },
+
+  {
+    id: 3,
+    title: "Poultry Nutrition And Feed Management Best Practices",
+    category: "Nutrition",
+    created_at: "2026-08-18",
+    image: {
+      url: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Proper nutrition is key to poultry success. Explore feed management techniques that maximize growth, egg production, and bird performance."
+  },
+
+  {
+    id: 4,
+    title: "The Importance Of Biosecurity In Poultry Farms",
+    category: "Farm Safety",
+    created_at: "2026-08-15",
+    image: {
+      url: "https://images.unsplash.com/photo-1563281577-a7be47e20db9?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Understand how effective biosecurity measures protect your poultry farm from diseases and improve long-term sustainability."
+  },
+
+  {
+    id: 5,
+    title: "Egg Production Tips For Higher Quality And Better Yield",
+    category: "Egg Production",
+    created_at: "2026-08-10",
+    image: {
+      url: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Improve egg quality and production efficiency with proven management strategies used by successful poultry farms."
+  },
+
+  {
+    id: 6,
+    title: "Sustainable Poultry Farming Practices For Future Growth",
+    category: "Sustainability",
+    created_at: "2026-08-05",
+    image: {
+      url: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Explore environmentally responsible poultry farming methods that enhance productivity while reducing waste and resource consumption."
+  },
+
+  {
+    id: 7,
+    title: "Essential Equipment Every Poultry Farm Should Have",
+    category: "Farm Equipment",
+    created_at: "2026-07-30",
+    image: {
+      url: "https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "From feeders to ventilation systems, discover the equipment required to maintain efficient and productive poultry operations."
+  },
+
+  {
+    id: 8,
+    title: "Common Poultry Diseases And How To Prevent Them",
+    category: "Disease Prevention",
+    created_at: "2026-07-25",
+    image: {
+      url: "https://images.unsplash.com/photo-1505935428862-770b6f24f629?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Learn about common poultry diseases, their symptoms, and preventive measures to protect your flock and maintain productivity."
+  },
+
+  {
+    id: 9,
+    title: "Choosing The Right Poultry Breed For Your Farm",
+    category: "Poultry Breeds",
+    created_at: "2026-07-20",
+    image: {
+      url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=90",
+    },
+    description:
+      "Selecting the right breed is crucial for success. Compare popular poultry breeds for meat production, egg laying, and dual-purpose farming."
+  }
+];
+
 const Blogs = () => {
-  const { blogs } = useContext(AppContext)
+  // const { blogs } = useContext(AppContext)
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
 
@@ -33,7 +143,7 @@ const Blogs = () => {
 
       return matchesCategory && matchesSearch;
     });
-  }, [blogs,activeCategory, search]);
+  }, [blogs, activeCategory, search]);
 
   return (
     <main className="overflow-hidden bg-[#061109] text-white">
