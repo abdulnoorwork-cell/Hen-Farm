@@ -70,7 +70,7 @@ const AddProduct = () => {
                 setImages([]);
                 setPreviewImage([]);
                 setName('');
-                setCategory('');
+                setCategory('' || null);
                 setPrice('');
                 quillRef.current.root.innerHTML = ''
             }
@@ -79,11 +79,6 @@ const AddProduct = () => {
             setLoading(false);
             console.log(error)
             setError(error.response.data.message)
-            if (error.response.status === 500) {
-                localStorage.removeItem('token');
-                window.location.href = "/dashboard"
-                setError(error.response.data.message)
-            }
         }
     }
 
@@ -260,7 +255,7 @@ const AddProduct = () => {
                                 hidden
                             />
 
-                            {(error === "Please fill required fields" ||
+                            {(error === "Please upload images" ||
                                 error === "Invalid format (jpg, jpeg, png, webp only)") && (
                                     <p className="text-red-500 text-[13px] mt-3">
                                         {error}
@@ -316,7 +311,7 @@ const AddProduct = () => {
                   "
                                 />
 
-                                {(error === "Please fill required fields" ||
+                                {(error === "Please enter product name" ||
                                     error === "Name must be between 8-120 characters") && (
                                         <p className="text-red-500 text-[13px] mt-2">
                                             {error}
@@ -374,7 +369,7 @@ const AddProduct = () => {
                                         </option>
                                     </select>
 
-                                    {error === "Please fill required fields" && (
+                                    {error === "Please select category" && (
                                         <p className="text-red-500 text-[13px] mt-2">
                                             {error}
                                         </p>
@@ -425,7 +420,7 @@ const AddProduct = () => {
                                         />
                                     </div>
 
-                                    {(error === "Please fill required fields" ||
+                                    {(error === "Please enter price" ||
                                         error === "Price must be greater than 10" ||
                                         error === "Offer price must be less than price") && (
                                             <p className="text-red-500 text-[13px] mt-2">
@@ -469,7 +464,7 @@ const AddProduct = () => {
                             />
 
                             {(
-                                error === "Please fill required fields" ||
+                                error === "Please enter description" ||
                                 error === "Description must be at least 500 characters"
                             ) && (
                                     <p className="text-red-500 text-[13px] mt-2">

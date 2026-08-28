@@ -1,47 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
     FiSearch,
     FiEdit,
     FiTrash2,
     FiPlus,
 } from "react-icons/fi";
+import {toast} from 'react-hot-toast'
+import { AppContext } from "../../context/AppContext";
+import axios from "axios";
 
 const Products = () => {
+    const { backendUrl, fetchProducts, products, loading } = useContext(AppContext);
     const [search, setSearch] = useState("");
-
-    const products = [
-        {
-            id: 1,
-            name: "Black & White Swap Sneakers",
-            image:
-                "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
-            category: "Footwear",
-            price: 4999,
-            stock: 24,
-        },
-        {
-            id: 2,
-            name: "One Degree Interlock Tee",
-            image:
-                "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500",
-            category: "T-Shirts",
-            price: 2499,
-            stock: 16,
-        },
-        {
-            id: 3,
-            name: "Cropped Jacket For Women",
-            image:
-                "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=500",
-            category: "Jackets",
-            price: 6999,
-            stock: 8,
-        },
-    ];
 
     const filteredProducts = products.filter((product) =>
         product.name.toLowerCase().includes(search.toLowerCase())
     );
+
+    const deleteProduct = async (id) => {
+        try {
+            const response = await axios.delete(`${backendUrl}/api/product/delete/${id}`, {
+                // headers: {
+                //     Authorization: `${isAdmin}`
+                // },
+                withCredentials: true
+            });
+            if (response.data.success) {
+                toast.success(response.data.message)
+                await fetchProducts();
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error(error.response.data.message)
+        }
+    }
 
     return (
         <div className="space-y-6">
@@ -150,7 +142,7 @@ const Products = () => {
                                         <div className="flex items-center gap-4">
 
                                             <img
-                                                src={product.image}
+                                                src={product.images?.[0]?.url}
                                                 alt=""
                                                 className="w-16 h-16 rounded-xl object-cover"
                                             />
@@ -185,8 +177,8 @@ const Products = () => {
 
                                         <span
                                             className={`px-3 py-1 rounded-full text-xs font-semibold ${product.stock > 10
-                                                    ? "bg-green-100 text-green-700"
-                                                    : "bg-red-100 text-red-700"
+                                                ? "bg-green-100 text-green-700"
+                                                : "bg-red-100 text-red-700"
                                                 }`}
                                         >
                                             {product.stock} Items
@@ -198,11 +190,13 @@ const Products = () => {
 
                                         <div className="flex justify-end gap-2">
 
-                                            <button className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center">
+                                            <button className="cursor-pointer w-10 h-10 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center">
                                                 <FiEdit />
                                             </button>
 
-                                            <button className="w-10 h-10 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center">
+                                            <button
+                                                onClick={() => deleteProduct(product?.id)}
+                                                className="cursor-pointer w-10 h-10 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center">
                                                 <FiTrash2 />
                                             </button>
 

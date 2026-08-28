@@ -3,12 +3,40 @@ import { v2 as cloudinary } from 'cloudinary'
 
 export const addProduct = async (req, res) => {
     try {
-        const { name, category, price, about, description, images } = req.body;
+        const { name, category, price, description, images } = req.body;
 
-        if (!name || !category || !about || !description || !price || !images) {
+        if (!name) {
             return res.status(400).json({
                 success: false,
-                message: "Please fill required fields"
+                message: "Please enter product name"
+            });
+        }
+
+        if (!category) {
+            return res.status(400).json({
+                success: false,
+                message: "Please select category"
+            });
+        }
+
+        if (!price) {
+            return res.status(400).json({
+                success: false,
+                message: "Please enter price"
+            });
+        }
+
+        if (!description) {
+            return res.status(400).json({
+                success: false,
+                message: "Please enter description"
+            });
+        }
+
+        if (!images) {
+            return res.status(400).json({
+                success: false,
+                message: "Please upload images"
             });
         }
 
@@ -26,13 +54,6 @@ export const addProduct = async (req, res) => {
             });
         }
 
-        if (about.length < 256) {
-            return res.status(400).json({
-                success: false,
-                message: "About product must be at least 256 characters"
-            });
-        }
-
         if (description.length < 256) {
             return res.status(400).json({
                 success: false,
@@ -42,8 +63,8 @@ export const addProduct = async (req, res) => {
 
         // 1. Insert product
         const [result] = await db.query(
-            "INSERT INTO products (name, category, price, about, description) VALUES (?, ?, ?, ?, ?)",
-            [name, category, price, about, description]
+            "INSERT INTO products (name, category, price, description) VALUES (?, ?, ?, ?)",
+            [name, category, price, description]
         );
 
         const productId = result.insertId;
@@ -69,7 +90,7 @@ export const addProduct = async (req, res) => {
         }
 
         for (const img of images) {
-            const upload = await cloudinary.uploader.upload(img);
+            const upload = await cloudinary.uploader.upload(img.tempFilePath);
 
             uploadImages.push([
                 productId,
@@ -104,7 +125,7 @@ export const getProducts = async (req, res) => {
     try {
         // 1. Get all products
         const [products] = await db.query(
-            "SELECT id, name, category, price, created_at FROM products"
+            "SELECT id, name, category, price, description, created_at FROM products"
         );
 
         if (!products.length) {
@@ -146,5 +167,99 @@ export const getProducts = async (req, res) => {
             success: false,
             message: "Server error: " + error
         });
+    }
+};
+
+export const getLatestProducts = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 4;
+
+        // 1. Get latest products
+        const [products] = await db.query(
+            "SELECT id, name, category, price, description, created_at FROM products ORDER BY created_at DESC LIMIT ?",
+            [limit]
+        );
+
+        if (!products.length) {
+            return res.status(404).json({
+                success: false,
+                message: "Products not found"
+            });
+        }
+
+        // 2. Get all images in ONE query
+        const [images] = await db.query(
+            "SELECT product_id, images FROM product_images"
+        );
+
+        // 3. Group images
+        const imageMap = {};
+
+        for (const img of images) {
+            if (!imageMap[img.product_id]) {
+                imageMap[img.product_id] = [];
+            }
+
+            try {
+                imageMap[img.product_id].push(JSON.parse(img.images));
+            } catch {
+                imageMap[img.product_id].push(img.images);
+            }
+        }
+
+        // 4. Attach images
+        const result = products.map(product => {
+            return {
+                ...product,
+                images: imageMap[product.id] || []
+            }
+        });
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error:" + error
+        });
+    }
+};
+
+export const deleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (id.length < 1) {
+            res.status(200).json({
+                success: false,
+                message: "Product not found"
+            })
+        }
+
+        const [imgRows] = await db.query(
+            "SELECT images FROM product_images WHERE product_id = ?",
+            [id]
+        );
+
+        for (const row of imgRows) {
+            const images = JSON.parse(row.images);
+
+            if (images.public_id) {
+                await cloudinary.uploader.destroy(images.public_id);
+            }
+        }
+
+        await db.query("DELETE FROM product_images WHERE product_id = ?", [id]);
+        await db.query("DELETE FROM products WHERE id = ?", [id]);
+
+        res.status(200).json({
+            success: true,
+            message: "Product deleted successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
     }
 };

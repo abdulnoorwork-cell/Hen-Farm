@@ -12,6 +12,12 @@ const AppContextProvider = ({ children }) => {
   const [blogLoading, setBlogLoading] = useState(false);
   const [latestBlogLoading, setLatestBlogLoading] = useState(false);
 
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  const [latestProducts, setLatestProducts] = useState([])
+  const [latestProductsLoading, setLatestProductsLoading] = useState(false)
+
   const isAdmin = true;
   const navigate = useNavigate();
 
@@ -49,9 +55,41 @@ const AppContextProvider = ({ children }) => {
     }
   };
 
+  const fetchProducts = async () => {
+    try {
+      setLoading(true)
+      let response = await axios.get(`${backendUrl}/api/product`, { withCredentials: true });
+      if (response.data) {
+        setProducts(response.data)
+      }
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchLatestProducts = async () => {
+    try {
+      setLatestProductsLoading(true)
+      let response = await axios.get(`${backendUrl}/api/product/latest-products`, { withCredentials: true })
+      if (response.data) {
+        setLatestProducts(response.data)
+        setLatestProductsLoading(false)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLatestProductsLoading(false)
+    }
+  }
+
   useEffect(() => {
     fetchBlogs();
     fetchLatestBlogs();
+    fetchProducts()
+    fetchLatestProducts()
   }, []);
 
   const values = {
@@ -64,6 +102,10 @@ const AppContextProvider = ({ children }) => {
     fetchLatestBlogs,
     isAdmin,
     navigate,
+    products,
+    latestProducts,
+    latestProductsLoading,
+    fetchLatestProducts
   };
 
   return (
